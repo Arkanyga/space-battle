@@ -1,5 +1,5 @@
 
-const SHOT_SPEED = 0.6,
+const SHOT_SPEED = 6,
   SHOT_LIFE = 30,
   SHOT_DISPLAY_RADIUS = 2.0;
 
@@ -42,16 +42,24 @@ class Shot {
       this.x = ship.x;
       this.y = ship.y;
 
-      this.xv = 0;
-      this.yv = 0;
+      this.xv = Math.cos(ship.ang) * SHOT_SPEED + ship.driftX;
+      this.yv = Math.sin(ship.ang) * SHOT_SPEED + ship.driftY;
       this.shotLife = SHOT_LIFE;
+      console.log(this.xv, this.yv);
+
     }
   }
 
   move() {
     if (this.shotLife > 0) {
       this.shotLife--;
+      this.x += this.xv;
+      this.y += this.yv;
     }
+
+    console.log(this.x, this.y, this.shotLife);
+
+    this.handleScreenWrap()
     // let nextCarX = this.x + this.driftX;
     // let nextCarY = this.y + this.driftY;
     // if (this.keyHeldGas) {
