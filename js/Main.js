@@ -4,7 +4,7 @@ const canvas = document.getElementById('gameCanvas'),
   FRAME_PER_SECOND = 30;
 
 
-let ship = new Ship(87, 65, 68, shipPic, shipPicDriveOff);
+let ship = new Ship(87, 65, 68, 32, shipPic, shipPicDriveOff);
 
 
 
@@ -12,6 +12,7 @@ let ship = new Ship(87, 65, 68, shipPic, shipPicDriveOff);
 window.onload = function () {
   loadImages();
   ship.initInput();
+  ship.reset();
   countLoadedImageAndLaunchIfReady();
 }
 
@@ -32,12 +33,12 @@ function countLoadedImageAndLaunchIfReady() {
 
 function drawEverething() {
   colorRect(0, 0, canvas.width, canvas.height, 'black')
-  ship.shipDraw();
+  ship.draw();
 
 }
 
 function moveEverething() {
-  ship.shipMove();
+  ship.move();
 
 }
 

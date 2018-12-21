@@ -5,7 +5,7 @@ const SPACESPEED_DECAY_MULT = 0.99,
 
 
 class Ship {
-  constructor(gasKey, leftKey, rightKey, pic, picDriveOff) {
+  constructor(gasKey, leftKey, rightKey, spaceBar, pic, picDriveOff) {
     this.x = canvas.width / 2;
     this.y = canvas.height / 2;
     this.driftX = 0;
@@ -14,14 +14,17 @@ class Ship {
     this.keyHeldGas = false;
     this.keyHeldTurnLeft = false;
     this.keyHeldTurnRight = false;
+    this.controlKeySpaceBar = spaceBar;
     this.controlKeyForGas = gasKey;
     this.controlKeyForTurnLeft = leftKey;
     this.controlKeyForTurnRight = rightKey;
     this.pic = pic;
     this.picDriveOff = picDriveOff;
+    this.myShot;
   }
 
-  shipDraw() {
+  draw() {
+    this.myShot.draw();
     if (this.keyHeldGas) {
       drawBitmapCenteredAtLocationWithRotation(this.pic, this.x, this.y, this.ang)
     } else {
@@ -47,7 +50,7 @@ class Ship {
   }
 
 
-  shipMove() {
+  move() {
     let nextCarX = this.x + this.driftX;
     let nextCarY = this.y + this.driftY;
     if (this.keyHeldGas) {
@@ -65,16 +68,45 @@ class Ship {
     this.handleScreenWrap()
     this.driftX *= SPACESPEED_DECAY_MULT;
     this.driftY *= SPACESPEED_DECAY_MULT;
+    this.myShot.move();
   }
 
+  cannonFire() {
+    this.myShot.shootFrom(this);
+  }
 
-
-
+  reset() {
+    this.myShot.reset();
+  }
+  // carReset() {
+  //   if (this.homeX == undefined) {
+  //     for (let i = 0; i < trackGrid.length; i++) {
+  //       if (trackGrid[i] === TRACK_PLAYER) {
+  //         let tileRow = Math.floor(i / TRACK_COLS);
+  //         let tileCol = i % TRACK_COLS;
+  //         this.homeX = tileCol * TRACK_W + TRACK_W / 2;
+  //         this.homeY = tileRow * TRACK_H + TRACK_H / 2;
+  //         trackGrid[i] = TRACK_ROAD;
+  //         break
+  //       }
+  //     }
+  //   }
+  //   this.carX = this.homeX;
+  //   this.carY = this.homeY;
+  //   this.carAng = -0.5 * Math.PI;
+  //   this.timer = 0;
+  //   this.timeCounter = 0;
+  //   this.roundCounter = 0;
+  //   this.bestTimeArr = []
+  //   this.bestTime = 0;
+  //   this.achieveFinish = false;
+  // }
 
 
 
 
   initInput() {
+    this.myShot = new Shot();
     document.addEventListener('keydown', this.keyPressed.bind(this));
     document.addEventListener('keyup', this.keyReleased.bind(this));
   }
@@ -98,6 +130,9 @@ class Ship {
 
   keyPressed(e) {
     e.preventDefault();
+    if (e.keyCode === this.controlKeySpaceBar) {
+      this.cannonFire();
+    }
     this.setKeyHoldState(e, true)
   }
 
