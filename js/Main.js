@@ -4,7 +4,7 @@ const canvas = document.getElementById('gameCanvas'),
   FRAME_PER_SECOND = 30;
 
 
-let ship = new Ship(87, 83, 65, 68, shipPic);
+let ship = new Ship(87, 65, 68, shipPic, shipPicDriveOff);
 
 
 

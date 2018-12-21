@@ -1,7 +1,7 @@
 
-const SPACESPEED_DECAY_MULT = 0.99,
-  THRUST_POWER = 0.15,
-  TURN_RATE = 0.03;
+const SHOT_SPEED = 0.6,
+  SHOT_LIFE = 30,
+  SHOT_DISPLAY_RADIUS = 2.0;
 
 
 class Ship {
@@ -11,9 +11,7 @@ class Ship {
     this.driftX = 0;
     this.driftY = 0;
     this.ang = 0;
-    this.keyHeldGas = false;
-    this.keyHeldTurnLeft = false;
-    this.keyHeldTurnRight = false;
+    this.shotLife = 0;
     this.controlKeyForGas = gasKey;
     this.controlKeyForTurnLeft = leftKey;
     this.controlKeyForTurnRight = rightKey;
@@ -46,6 +44,11 @@ class Ship {
     }
   }
 
+  shootFrom(ship) {
+    if (shotLife === 0) {
+      this.x = ship.x;
+    }
+  }
 
   shipMove() {
     let nextCarX = this.x + this.driftX;
@@ -70,7 +73,9 @@ class Ship {
 
 
 
-
+  reset() {
+    this.shotLife = 0;
+  }
 
 
 
