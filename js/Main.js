@@ -4,14 +4,14 @@ const canvas = document.getElementById('gameCanvas'),
   FRAME_PER_SECOND = 30;
 
 
-let p1 = new Car(87, 83, 65, 68, carPic);
+let ship = new Ship(87, 83, 65, 68, shipPic);
 
 
 
 
 window.onload = function () {
   loadImages();
-  p1.initInput();
+  ship.initInput();
   countLoadedImageAndLaunchIfReady();
 }
 
@@ -32,12 +32,12 @@ function countLoadedImageAndLaunchIfReady() {
 
 function drawEverething() {
   colorRect(0, 0, canvas.width, canvas.height, 'black')
-  p1.carDraw();
+  ship.shipDraw();
 
 }
 
 function moveEverething() {
-  p1.carMove();
+  ship.shipMove();
 
 }
 

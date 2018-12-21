@@ -1,11 +1,11 @@
 let picsToLoad = 0;
-const carPic = document.createElement("img");
+const shipPic = document.createElement("img");
 let trackPics = [];
 
 
 function loadImages() {
   let imageList = [
-    { picName: carPic, src: 'player1.png' }
+    { picName: shipPic, src: 'ship.png' }
   ]
   picsToLoad = imageList.length;
 

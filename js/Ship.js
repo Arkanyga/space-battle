@@ -8,12 +8,12 @@ const GROUNDSPEED_DECAY_MULT = 0.95,
 
 
 
-class Car {
-  constructor(gasKey, reverseKey, leftKey, rightKey, carPic) {
-    this.carX = 75;
-    this.carY = 75;
-    this.carSpeed = 0;
-    this.carAng = -0.5 * Math.PI;
+class Ship {
+  constructor(gasKey, reverseKey, leftKey, rightKey, shipPic) {
+    this.shipX = canvas.width / 2;
+    this.shipY = canvas.height / 2;
+    this.shipSpeed = 0;
+    this.shipAng = -0.5 * Math.PI;
     this.keyHeldGas = false;
     this.keyHeldReverse = false;
     this.keyHeldTurnLeft = false;
@@ -22,35 +22,50 @@ class Car {
     this.controlKeyForReverse = reverseKey;
     this.controlKeyForTurnLeft = leftKey;
     this.controlKeyForTurnRight = rightKey;
-    this.carPic = carPic;
+    this.shipPic = shipPic;
 
   }
 
-  carDraw() {
-    drawBitmapCenteredAtLocationWithRotation(this.carPic, this.carX, this.carY, this.carAng)
+  shipDraw() {
+    drawBitmapCenteredAtLocationWithRotation(this.shipPic, this.shipX, this.shipY, this.shipAng)
   }
 
 
+  handleScreenWrap() {
+    if (this.shipX > canvas.width) {
+      this.shipX = 0;
+    }
+    if (this.shipX < 0) {
+      this.shipX = canvas.width;
+    }
+    if (this.shipY < 0) {
+      this.shipY = canvas.height;
+    }
+    if (this.shipY > canvas.height) {
+      this.shipY = 0;
+    }
+  }
 
-  carMove() {
-    let nextCarX = this.carX + Math.cos(this.carAng) * this.carSpeed;
-    let nextCarY = this.carY + Math.sin(this.carAng) * this.carSpeed;
+
+  shipMove() {
+    let nextCarX = this.shipX + Math.cos(this.shipAng) * this.shipSpeed;
+    let nextCarY = this.shipY + Math.sin(this.shipAng) * this.shipSpeed;
     if (this.keyHeldGas) {
-      this.carSpeed += DRIVE_POWER;
+      this.shipSpeed += DRIVE_POWER;
     }
     if (this.keyHeldReverse) {
-      this.carSpeed -= REVERSE_POWER;
+      this.shipSpeed -= REVERSE_POWER;
     }
-    if (this.keyHeldTurnLeft && Math.abs(this.carSpeed) > MIN_TURN_SPEED) {
-      this.carAng -= TURN_RATE * Math.PI;
+    if (this.keyHeldTurnLeft && Math.abs(this.shipSpeed) > MIN_TURN_SPEED) {
+      this.shipAng -= TURN_RATE * Math.PI;
     }
-    if (this.keyHeldTurnRight && Math.abs(this.carSpeed) > MIN_TURN_SPEED) {
-      this.carAng += TURN_RATE * Math.PI;
+    if (this.keyHeldTurnRight && Math.abs(this.shipSpeed) > MIN_TURN_SPEED) {
+      this.shipAng += TURN_RATE * Math.PI;
     }
-    this.carX = nextCarX;
-    this.carY = nextCarY;
-
-    this.carSpeed *= GROUNDSPEED_DECAY_MULT;
+    this.shipX = nextCarX;
+    this.shipY = nextCarY;
+    this.handleScreenWrap()
+    this.shipSpeed *= GROUNDSPEED_DECAY_MULT;
   }
 
   initInput() {
