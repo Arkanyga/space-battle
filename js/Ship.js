@@ -77,6 +77,8 @@ class Ship {
 
   reset() {
     this.myShot.reset();
+    this.x = canvas.width / 2;
+    this.y = canvas.height / 2;
   }
   // carReset() {
   //   if (this.homeX == undefined) {
@@ -102,7 +104,17 @@ class Ship {
   //   this.achieveFinish = false;
   // }
 
+  checkMyShipAndShotCollisionAgainst(enemy) {
+    if (enemy.isOverlappingPoint(this.x, this.y)) {
+      this.reset();
+      console.log(123);
 
+    }
+    if (this.myShot.hitTest(enemy)) {
+      enemy.reset();
+      this.myShot.reset();
+    }
+  }
 
 
   initInput() {

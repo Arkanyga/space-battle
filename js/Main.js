@@ -42,5 +42,6 @@ function drawEverething() {
 function moveEverething() {
   ship.move();
   ufo.move();
+  ship.checkMyShipAndShotCollisionAgainst(ufo);
 }
 

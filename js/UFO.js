@@ -1,6 +1,6 @@
-
-const UFO_SPEED = 1.9;
-UFO_TIME_BETWEEN_CHANGE_DIR = 85;
+const UFO_SPEED = 1.9,
+  UFO_TIME_BETWEEN_CHANGE_DIR = 85,
+  UFO_COLLISION_RADIUS = 25;
 
 
 class UFO {
@@ -57,4 +57,12 @@ class UFO {
 
   }
 
+  isOverlappingPoint(testX, testY) {
+    let deltaX = testX - this.x;
+    let deltaY = testY - this.y;
+    let dist = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    return (dist <= UFO_COLLISION_RADIUS)
+
+
+  }
 }

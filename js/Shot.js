@@ -59,6 +59,12 @@ class Shot {
     this.handleScreenWrap()
   }
 
+  hitTest(enemy) {
+    if (this.shotLife <= 0) {
+      return false;
+    }
+    return enemy.isOverlappingPoint(this.x, this.y)
+  }
 
 
 
