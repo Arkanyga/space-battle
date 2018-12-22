@@ -5,6 +5,7 @@ const canvas = document.getElementById('gameCanvas'),
 
 
 let ship = new Ship(87, 65, 68, 32, shipPic, shipPicDriveOff);
+let ufo = new UFO(UFOPic);
 
 
 
@@ -13,6 +14,7 @@ window.onload = function () {
   loadImages();
   ship.initInput();
   ship.reset();
+  ufo.reset();
   countLoadedImageAndLaunchIfReady();
 }
 
@@ -34,11 +36,11 @@ function countLoadedImageAndLaunchIfReady() {
 function drawEverething() {
   colorRect(0, 0, canvas.width, canvas.height, 'black')
   ship.draw();
-
+  ufo.draw();
 }
 
 function moveEverething() {
   ship.move();
-
+  ufo.move();
 }
 

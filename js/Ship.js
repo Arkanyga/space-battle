@@ -8,8 +8,8 @@ class Ship {
   constructor(gasKey, leftKey, rightKey, spaceBar, pic, picDriveOff) {
     this.x = canvas.width / 2;
     this.y = canvas.height / 2;
-    this.driftX = 0;
-    this.driftY = 0;
+    this.xv = 0;
+    this.yv = 0;
     this.ang = 0;
     this.keyHeldGas = false;
     this.keyHeldTurnLeft = false;
@@ -51,11 +51,11 @@ class Ship {
 
 
   move() {
-    let nextCarX = this.x + this.driftX;
-    let nextCarY = this.y + this.driftY;
+    let nextCarX = this.x + this.xv;
+    let nextCarY = this.y + this.yv;
     if (this.keyHeldGas) {
-      this.driftX += THRUST_POWER * Math.cos(this.ang);
-      this.driftY += THRUST_POWER * Math.sin(this.ang);
+      this.xv += THRUST_POWER * Math.cos(this.ang);
+      this.yv += THRUST_POWER * Math.sin(this.ang);
     }
     if (this.keyHeldTurnLeft) {
       this.ang -= TURN_RATE * Math.PI;
@@ -66,8 +66,8 @@ class Ship {
     this.x = nextCarX;
     this.y = nextCarY;
     this.handleScreenWrap()
-    this.driftX *= SPACESPEED_DECAY_MULT;
-    this.driftY *= SPACESPEED_DECAY_MULT;
+    this.xv *= SPACESPEED_DECAY_MULT;
+    this.yv *= SPACESPEED_DECAY_MULT;
     this.myShot.move();
   }
 
